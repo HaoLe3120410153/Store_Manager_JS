@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap");
 * {
     margin: 0;
-    padding: 0;
+    padding: 0 10px;
     box-sizing: border-box;
-    font-family: "Spartan", sans-serif;
+    font-family: "Lato", sans-serif;
 }
 
 html {
@@ -24,6 +24,16 @@ h2 {
     color: #222;
 }
 
+h3 {
+    font-size: 24px;
+    text-align: center;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: 400;
+}
+
 h4 {
     font-size: 20px;
     color: #222;
@@ -38,6 +48,9 @@ p {
     font-size: 16px;
     color: #465b52;
     margin: 15px 0 20px 0;
+}
+table thead{
+    background-color: #888;
 }
 
 .section-p1 {
@@ -205,6 +218,14 @@ body {
     margin: 10px auto;
 }
 
+#input-file{
+    display: none;
+}
+
+#editfile{
+    display: none;
+}
+
 input {
     color: #432000;
     background-color: #DCE1EB;
@@ -217,11 +238,7 @@ input {
     margin: 10px auto;
 }
 
-#input-file{
-    display: none;
-}
-
-label {
+.container label, select {
     width: 10%;
     color: #8f8f8f;
     background-color: #DCE1EB;
@@ -270,10 +287,10 @@ button:hover {
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 150px auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
+    width: 50%;
 }
 
 .close {
@@ -288,4 +305,80 @@ button:hover {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+#editForm {
+    padding: 10px;
+    position: relative;
+}
+
+#editForm label{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 10px 10px;
+    margin: 20px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Khoảng cách giữa các cặp label và input */
+}
+
+.form-group label {
+    flex: 3; /* Để label chiếm phần đều của flex container */
+    color: #000;
+}
+
+#editForm .form-group-img label {
+    flex: 3; /* Để label chiếm phần đều của flex container */
+    color: #000;
+    background-color: #DCE1EB;
+    padding: 20px;
+    margin: 0px;
+}
+
+.form-group input,
+.form-group-img input {
+    flex: 3; /* Để input chiếm phần còn lại của flex container */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+#input-pro-category option{
+    text-align: center;
+}
+
+#product-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#product-sections h3{
+    border: 1px solid #000;
+    border-radius: 5px;
+    width: 50%;
+    justify-content: center;
+    background-color: #93d2a0;
+    align-items: center;
+    margin: 10px auto; /* Khoảng cách phía trên và dưới */
+    padding: 10px 0; /* Thêm khoảng cách bên trong */
+}
+
+.category-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.category-table th, .category-table td {
+    width: 20%;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.category-table th {
+    background-color: #f2f2f2;
 }

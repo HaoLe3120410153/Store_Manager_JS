@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="site.webmanifest">
 </head>
 <body>
     <section id="header">
@@ -21,7 +21,7 @@
         <div>
             <ul id="navbar">
                 <li><a href="index.html">Home</a></li>
-                <li><a class="active" href="cart.html">Shop</a></li>
+                <li><a class="active" href="cart.html">Sản Phẩm</a></li>
                 <li><a href="population.html">Thống kê</a></li>
                 <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
                 <a href="" id="close"><i class="far fa-times"></i></a>
@@ -36,6 +36,9 @@
         <input type="file" id="input-file" accept="image/png, image/jpeg" placeholder="Ảnh">
         <label for="input-file">Ảnh</label>
         <input type="text" id="input-pro-name" placeholder="Tên Sản Phẩm">
+        <select id="input-pro-category">
+            <option value="">Loại</option>
+        </select>
         <input type="text" id="input-pro-price" placeholder="Đơn Giá">
         <input type="text" id="input-pro-quantity" placeholder="Số lượng">
         <button id="add-button">Thêm Sản Phẩm</button>
@@ -62,12 +65,25 @@
                 <span class="close">&times;</span>
                 <h3>Edit Product</h3>
                 <form id="editForm">
-                    <label for="editName">Name:</label>
-                    <input type="text" id="editName" name="editName" required><br><br>
-                    <label for="editPrice">Price:</label>
-                    <input type="number" id="editPrice" name="editPrice" required><br><br>
-                    <label for="editQuantity">Quantity:</label>
-                    <input type="number" id="editQuantity" name="editQuantity" required><br><br>
+                    <div class="form-group-img">
+                        <label for="editfile">Ảnh:</label>
+                        <input type="file" id="editfile" accept="image/png, image/jpeg" placeholder="Ảnh"><br><br>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="editName">Name:</label>
+                        <input type="text" id="editName" name="editName" required><br><br>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="editPrice">Price:</label>
+                        <input type="number" id="editPrice" name="editPrice" required><br><br>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="editQuantity">Quantity:</label>
+                        <input type="number" id="editQuantity" name="editQuantity" required><br><br>
+                    </div>
                     <button type="submit">Save Changes</button>
                 </form>
             </div>

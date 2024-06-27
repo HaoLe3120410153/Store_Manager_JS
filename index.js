@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref as dbRef, push, onValue, remove, update} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getStorage, ref as strRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCiwuCWIQyZlc0NcgU7dtsS-vZJqZ7nncA",
@@ -14,54 +15,78 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
-const productInDB = ref(database, "products")
+const storage = getStorage(app);
+const productInDB = dbRef(database, 'products');
 
 const productListEl = document.getElementById("product-list")
 
-onValue(productInDB, function(snapshot){
+
+onValue(productInDB, function(snapshot) {
     if (snapshot.exists()) {
-        let itemsArray = Object.entries(snapshot.val());
-
-        refreshProductListEl();
-
-        itemsArray.forEach(item => {
-            appendItemToProductList(item);
-        });
+        refreshProductSections();
+        const categories = snapshot.val();
+        for (const category in categories) {
+            const products = categories[category];
+            createCategoryTable(category, products);
+        }
     } else {
-        productListEl.innerHTML = "No items here... yet";
+        productSections.innerHTML = "<p>No items here... yet</p>";
     }
 });
 
-function refreshProductListEl() {
-    productListEl.innerHTML = "";
+function refreshProductSections() {
+    document.getElementById('product-sections').innerHTML = "";
 }
 
-function appendItemToProductList(item) {
-    let itemID = item[0];
-    let itemValue = item[1];
-    let newEl = document.createElement("tr");
+function createCategoryTable(category, products) {
+    const productSections = document.getElementById('product-sections');
 
-    const imageCell = document.createElement("td");
-    const imgEl = document.createElement("img");
-    imgEl.src = itemValue.imageUrl;
-    imgEl.style.width = "100px"; // Adjust as necessary
-    imageCell.appendChild(imgEl);
+    const table = document.createElement('table');
+    table.classList.add('category-table');
 
-    let nameCell = document.createElement("td");
-    nameCell.textContent = itemValue.name; // Assuming itemValue is an object with a 'name' property
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
 
-    let priceCell = document.createElement("td");
-    priceCell.textContent = itemValue.price; // Assuming itemValue has a 'price' property
+    const headers = ['Ảnh', 'Tên', 'Giá', 'Số lượng'];
+    headers.forEach(headerText => {
+        const header = document.createElement('th');
+        header.textContent = headerText;
+        headerRow.appendChild(header);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
 
-    let quantityCell = document.createElement("td");
-    quantityCell.textContent = itemValue.quantity; // Assuming itemValue has a 'quantity' property
+    const tbody = document.createElement('tbody');
+    for (const productId in products) {
+        const product = products[productId];
+        const newRow = document.createElement('tr');
 
-    // Append cells to the row
-    newEl.appendChild(imageCell);
-    newEl.appendChild(nameCell);
-    newEl.appendChild(priceCell);
-    newEl.appendChild(quantityCell);
+        const imageCell = document.createElement('td');
+        const imgEl = document.createElement('img');
+        imgEl.src = product.imageUrl;
+        imgEl.style.width = '100px'; // Adjust as necessary
+        imageCell.appendChild(imgEl);
+        newRow.appendChild(imageCell);
 
-    // Append the new row to the product list element
-    productListEl.appendChild(newEl);
+        const nameCell = document.createElement('td');
+        nameCell.textContent = product.name;
+        newRow.appendChild(nameCell);
+
+        const priceCell = document.createElement('td');
+        priceCell.textContent = product.price;
+        newRow.appendChild(priceCell);
+
+        const quantityCell = document.createElement('td');
+        quantityCell.textContent = product.quantity;
+        newRow.appendChild(quantityCell);
+
+        tbody.appendChild(newRow);
+    }
+    table.appendChild(tbody);
+
+    const categoryTitle = document.createElement('h3');
+    categoryTitle.textContent = category;
+
+    productSections.appendChild(categoryTitle);
+    productSections.appendChild(table);
 }
